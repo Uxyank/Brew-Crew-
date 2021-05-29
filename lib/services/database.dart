@@ -21,12 +21,12 @@ class DatabaseService {
       //print('-----------------------------------------');
       //print('name : ${doc['name']}');
       //print('sugars : ${doc['sugars']}');
-      //print('strenght : ${doc['strength']}');
+      //print('strenght : ${doc['strength']}'); //error is here!
       //print('=========================================');
       return Brew(
         name: doc['name'] ?? '',
         sugars: doc['sugars'] ?? '0',
-        strength: int.parse(doc['strength']), //
+        strength: doc['strength'] ?? 0, //error is here!
       );
     }).toList();
   }

@@ -13,7 +13,7 @@ class _BrewListState extends State<BrewList> {
     final brews = Provider.of<List<Brew>>(context);
     brews.forEach((brews) {
       print(brews.name);
-      print(brews.strength);
+      print(brews.strength); //error is here!
       print(brews.sugars);
     });
     return Container();
