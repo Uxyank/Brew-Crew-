@@ -34,7 +34,7 @@ class UserTile extends StatelessWidget {
         child: ListTile(
           title: Text(brew.name),
           subtitle:
-              Text('sugars : ${brew.sugars} / strenght : ${brew.strength}'),
+              Text('sugars : ${brew.sugars} / strength : ${brew.strength}'),
         ),
       ),
     );
