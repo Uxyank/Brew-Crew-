@@ -42,6 +42,8 @@ class AuthService {
           email: email, password: password);
       User? user = userCredential.user;
 
+      await DatabaseService(user!.uid)
+          .updateUserData('New crew member', '0', 100);
       return _useroneFromuserCredential(user);
     } catch (e) {
       print(e.toString());
@@ -59,7 +61,7 @@ class AuthService {
       // Create a new document for the user with the uid
 
       await DatabaseService(user!.uid)
-          .updateUserData('0', 'New crew member', 100);
+          .updateUserData('New crew member', '0', 100);
 
       return _useroneFromuserCredential(user);
     } catch (e) {

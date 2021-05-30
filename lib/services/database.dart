@@ -1,9 +1,5 @@
 import 'package:brew_crew/models/brew.dart';
-import 'package:brew_crew/screens/home/brew_list.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-// name: doc.data()['name'],
-// strength: doc.data()['strenght'],
-// sugars: doc.data()['sugars'],
 
 class DatabaseService {
   final String uid;
@@ -13,11 +9,11 @@ class DatabaseService {
   final CollectionReference<Map<String, dynamic>> brewCollection =
       FirebaseFirestore.instance.collection("brews");
 
-  Future<void> updateUserData(String sugars, String name, int strenght) async {
+  Future<void> updateUserData(String name, String sugars, int strength) async {
     return await brewCollection.doc(uid).set({
       'sugars': sugars,
       'name': name,
-      'strenght': strenght,
+      'strength': strength,
     });
   }
 
@@ -25,7 +21,9 @@ class DatabaseService {
     var data = snapshot.data();
     if (data == null) throw Exception("Brew not found");
     print('-------------------------');
-    print(uid.runtimeType);
+    print(data);
+    //print(int.parse(data['strength']));
+    print(data);
     return Brew(
       uid: uid,
       name: data['name'] ?? '',

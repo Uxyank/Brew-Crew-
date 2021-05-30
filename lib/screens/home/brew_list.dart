@@ -11,6 +11,9 @@ class _BrewListState extends State<BrewList> {
   @override
   Widget build(BuildContext context) {
     final brews = Provider.of<List<Brew>>(context);
+
+    //print('Strength 01: ${brews[0].strength}'); // !!!!!!!
+
     return ListView.builder(
         itemCount: brews.length,
         itemBuilder: (context, index) {
@@ -26,13 +29,14 @@ class UserTile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    //print(brew.strength); // !!!!!!!
     return Padding(
       padding: const EdgeInsets.only(top: 8.0),
       child: Card(
         margin:
             EdgeInsets.only(top: 12.0, bottom: 6.0, left: 20.0, right: 20.0),
         child: ListTile(
-          title: Text(brew.name),
+          title: Text('Name : ${brew.name}'),
           subtitle:
               Text('sugars : ${brew.sugars} / strenght : ${brew.strength}'),
         ),
