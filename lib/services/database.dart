@@ -2,7 +2,7 @@ import 'package:brew_crew/models/brew.dart';
 import 'package:brew_crew/screens/home/brew_list.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 // name: doc.data()['name'],
-// strength: doc.data()['strenght'],
+// strength: doc.data()['strength'],
 // sugars: doc.data()['sugars'],
 
 class DatabaseService {
@@ -13,11 +13,11 @@ class DatabaseService {
   final CollectionReference<Map<String, dynamic>> brewCollection =
       FirebaseFirestore.instance.collection("brews");
 
-  Future<void> updateUserData(String sugars, String name, int strenght) async {
+  Future<void> updateUserData(String sugars, String name, int strength) async {
     return await brewCollection.doc(uid).set({
       'sugars': sugars,
       'name': name,
-      'strenght': strenght,
+      'strength': strength,
     });
   }
 
