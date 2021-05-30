@@ -8,7 +8,7 @@ class AuthService {
 
   //create user obj based on userCredential
   UserOne? _useroneFromuserCredential(User? user) {
-    return user != null ? UserOne(uid: user.uid) : null;
+    return user != null ? UserOne(user.uid) : null;
   }
 
   // auth change stream
@@ -55,8 +55,10 @@ class AuthService {
       UserCredential userCredential = await _auth
           .createUserWithEmailAndPassword(email: email, password: password);
       User? user = userCredential.user;
+
       // Create a new document for the user with the uid
-      await DatabaseService(uid: user!.uid)
+
+      await DatabaseService(user!.uid)
           .updateUserData('0', 'New crew member', 100);
 
       return _useroneFromuserCredential(user);

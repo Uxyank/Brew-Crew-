@@ -1,13 +1,19 @@
 import 'package:brew_crew/models/brew.dart';
+import 'package:brew_crew/screens/home/brew_list.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+// name: doc.data()['name'],
+// strength: doc.data()['strenght'],
+// sugars: doc.data()['sugars'],
 
 class DatabaseService {
-  final String? uid;
-  DatabaseService({this.uid});
-  // Colection reference
-  final CollectionReference brewCollection =
-      FirebaseFirestore.instance.collection('brews');
-  Future updateUserData(String sugars, String name, int strenght) async {
+  final String uid;
+
+  DatabaseService(this.uid);
+
+  final CollectionReference<Map<String, dynamic>> brewCollection =
+      FirebaseFirestore.instance.collection("brews");
+
+  Future<void> updateUserData(String sugars, String name, int strenght) async {
     return await brewCollection.doc(uid).set({
       'sugars': sugars,
       'name': name,
@@ -15,19 +21,27 @@ class DatabaseService {
     });
   }
 
-  // brew list from snapshot
-  List<Brew> _brewListFromSnapshot(QuerySnapshot snapshot) {
+  Brew _brewFromSnapshot(DocumentSnapshot<Map<String, dynamic>> snapshot) {
+    var data = snapshot.data();
+    if (data == null) throw Exception("Brew not found");
+    print('-------------------------');
+    print(uid.runtimeType);
+    return Brew(
+      uid: uid,
+      name: data['name'] ?? '',
+      sugars: data['sugars'] ?? '0',
+      strength: data['strength'] ?? 0,
+    );
+  }
+
+  Stream<Brew> get brew {
+    return brewCollection.doc(uid).snapshots().map(_brewFromSnapshot);
+  }
+
+  List<Brew> _brewListFromSnapshot(
+      QuerySnapshot<Map<String, dynamic>> snapshot) {
     return snapshot.docs.map((doc) {
-      //print('-----------------------------------------');
-      //print('name : ${doc['name']}');
-      //print('sugars : ${doc['sugars']}');
-      //print('strenght : ${doc['strength']}'); //error is here!
-      //print('=========================================');
-      return Brew(
-        name: doc['name'] ?? '',
-        sugars: doc['sugars'] ?? '0',
-        strength: doc['strength'] ?? 0, //error is here!
-      );
+      return _brewFromSnapshot(doc);
     }).toList();
   }
 
@@ -35,7 +49,3 @@ class DatabaseService {
     return brewCollection.snapshots().map(_brewListFromSnapshot);
   }
 }
-
-// name: doc.data()['name'],
-// strength: doc.data()['strenght'],
-// sugars: doc.data()['sugars'],
