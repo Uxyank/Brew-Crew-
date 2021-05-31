@@ -4,6 +4,12 @@ A new Flutter project.
 
 ## Getting Started
 
+get help in :
+
+https://github.com/iamshaunjp/flutter-firebase.git
+https://github.com/dsilvera/flutter_firebase.git
+
+
 This project is a starting point for a Flutter application.
 
 A few resources to get you started if this is your first Flutter project:
