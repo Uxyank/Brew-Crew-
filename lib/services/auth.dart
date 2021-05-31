@@ -28,7 +28,7 @@ class AuthService {
       UserCredential userCredential = await _auth.signInAnonymously();
       User? user = userCredential.user;
       //return _auth.currentUser;
-      return _useroneFromuserCredential(user);
+      return _useroneFromuserCredential(user!);
     } catch (e) {
       print(e.toString());
       return null;
@@ -40,9 +40,9 @@ class AuthService {
     try {
       UserCredential userCredential = await _auth.signInWithEmailAndPassword(
           email: email, password: password);
-      User? user = userCredential.user;
+      User? user = userCredential.user!;
 
-      await DatabaseService(user!.uid)
+      await DatabaseService(user.uid)
           .updateUserData('New crew member', '0', 100);
       return _useroneFromuserCredential(user);
     } catch (e) {
@@ -56,11 +56,11 @@ class AuthService {
     try {
       UserCredential userCredential = await _auth
           .createUserWithEmailAndPassword(email: email, password: password);
-      User? user = userCredential.user;
+      User? user = userCredential.user!;
 
       // Create a new document for the user with the uid
 
-      await DatabaseService(user!.uid)
+      await DatabaseService(user.uid)
           .updateUserData('New crew member', '0', 100);
 
       return _useroneFromuserCredential(user);
